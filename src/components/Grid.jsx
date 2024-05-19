@@ -48,7 +48,7 @@ function Grid({ num }) {
             //function to stop response from user
       }
       return (
-            <div className="gridwrap flex justify-center gap-56 items-center flex-wrap">
+            <div className="gridwrap flex justify-center gap-40 lg:gap-56 items-center flex-wrap">
                   <div className="flex flex-col justify-center items-center gap-10">
                         <div id="reset" className="gap-9 hidden flex-wrap justify-center">
                               <h1 className="flex items-center text-yellow-400 text-5xl border-2 border-white p-3 rounded-md">
