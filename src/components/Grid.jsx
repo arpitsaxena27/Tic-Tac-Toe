@@ -8,6 +8,7 @@ function Grid({ num }) {
       let [Winner, setWinner] = useState("");
       // eslint-disable-next-line no-unused-vars
       let [count, setCount] = useState(num);
+      const [WinningIndices, setWinningIndices] = useState([]);
       let reset = document.getElementById("reset");
       let turn = document.getElementById("turn");
       function reseter() {
@@ -15,6 +16,7 @@ function Grid({ num }) {
             setTurn(true);
             setWinner("");
             setTurnstr("TURN OF -> X");
+            setWinningIndices([]);
             reset.classList.add("hidden");
             reset.classList.remove("flex");
             turn.classList.remove("hidden");
@@ -29,8 +31,10 @@ function Grid({ num }) {
                         GameBoard[index] = "O";
                   }
                   setGameBoard([...GameBoard]);
-                  if (isWinner(GameBoard)) {
-                        setWinner(`${GameBoard[index]}`);
+                  const winnerInfo = isWinner(GameBoard);
+            if (winnerInfo && winnerInfo.length > 0) {
+                setWinner(`${GameBoard[index]}`);
+                setWinningIndices(winnerInfo);
                         reset.classList.remove("hidden");
                         reset.classList.add("flex");
                         turn.classList.add("hidden");
@@ -70,12 +74,11 @@ function Grid({ num }) {
                   <div className="grid grid-cols-3 gap-0 w-fit">
                         {GameBoard.map((el, idx) => (
                               <Card
-                                    onPlay={
-                                          isWinner(GameBoard) ? playstop : play
-                                    }
+                                    onPlay={WinningIndices.length > 0 ? () => playstop : () => play(idx)}
                                     player={el}
                                     key={idx}
                                     index={idx}
+                                    isWinner={WinningIndices.includes(idx)}
                               ></Card>
                         ))}
                   </div>
